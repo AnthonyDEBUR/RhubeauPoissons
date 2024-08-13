@@ -1,0 +1,18 @@
+flat_first.Rmd:
+  path: dev/flat_first.Rmd
+  state: active
+  R:
+  - R/charge_stations_aspe.R
+  - R/liste_operations_aspe.R
+  tests:
+  - tests/testthat/test-charge_stations_aspe.R
+  - tests/testthat/test-liste_operations_aspe.R
+  vignettes: []
+  inflate:
+    flat_file: dev/flat_first.Rmd
+    vignette_name: .na
+    open_vignette: true
+    check: true
+    document: true
+    overwrite: ask
+    clean: ask
