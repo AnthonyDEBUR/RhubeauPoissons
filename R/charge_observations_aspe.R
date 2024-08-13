@@ -21,6 +21,9 @@ charge_observations_aspe <- function(code_operation) {
     if (!is.character(code_operation)) {
       stop("code_operation doit être un vecteur de caractères.")
     }
+    if (length(code_operation)>200) {
+      stop("code_operation doit comporter moins de 200 valeurs")
+    }
     code_operation <- paste(code_operation, sep = "", collapse = ",")
   } else {
     stop("code_operation doit être non NULL.")
@@ -48,7 +51,7 @@ charge_observations_aspe <- function(code_operation) {
     # Vérifier le code de statut
     if (httr::status_code(response) %in% c(200, 206)) {
       # Obtenir le contenu de la réponse
-      content_text <- httr::content(response, as = "text", encoding = "UTF-8")
+      content_text <- httr::content(response, as = "text", encoding = "UTF-8", type="text")
       
       # Vérifier si le contenu est vide
       if (nchar(content_text) == 0) {

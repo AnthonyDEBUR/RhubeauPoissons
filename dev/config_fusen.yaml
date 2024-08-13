@@ -5,10 +5,12 @@ flat_first.Rmd:
   - R/charge_observations_aspe.R
   - R/charge_stations_aspe.R
   - R/liste_operations_aspe.R
+  - R/split_observations_aspe.R
   tests:
   - tests/testthat/test-charge_stations_aspe.R
   - tests/testthat/test-liste_operations_aspe.R
   - tests/testthat/test-charge_observations_aspe.R
+  - tests/testthat/test-split_observations_aspe.R
   vignettes: []
   inflate:
     flat_file: dev/flat_first.Rmd

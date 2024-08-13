@@ -66,7 +66,7 @@ params <- list(
   code_bassin = code_bassin0,                    # Code du bassin
   format = "json",                       # Format de la réponse
   size = 100,                             # Taille de la page (nombre de résultats par requête)
-fields = "code_station,libelle_station,coordonnee_x_station,coordonnee_y_station,code_point_prelevement_aspe,code_point_prelevement"
+fields = "code_station,libelle_station,coordonnee_x_station,coordonnee_y_station,code_point_prelevement_aspe,code_point_prelevement,longitude,latitude"
   )
 
 # Initialiser les variables pour la pagination
@@ -197,6 +197,9 @@ liste_operations_aspe <- function(codes_stations = NULL,
     if (!is.character(codes_stations)) {
       stop("codes_stations doit être un vecteur de caractères.")
     }
+    if (length(codes_stations)>200) {
+      stop("codes_stations doit comporter moins de 200 valeurs")
+    }
     codes_stations0 <- paste(codes_stations, sep = "", collapse = ",")
   } else {
     codes_stations0 <- NULL
@@ -205,6 +208,9 @@ liste_operations_aspe <- function(codes_stations = NULL,
   if (!is.null(code_point_prelevement_aspe)) {
     if (!is.character(code_point_prelevement_aspe)) {
       stop("code_point_prelevement_aspe doit être un vecteur de caractères.")
+    }
+    if (length(code_point_prelevement_aspe)>200) {
+      stop("code_point_prelevement_aspe doit comporter moins de 200 valeurs")
     }
     code_point_prelevement_aspe0 <- paste(code_point_prelevement_aspe, sep = "", collapse = ",")
   } else {
@@ -424,6 +430,9 @@ charge_observations_aspe <- function(code_operation) {
     if (!is.character(code_operation)) {
       stop("code_operation doit être un vecteur de caractères.")
     }
+    if (length(code_operation)>200) {
+      stop("code_operation doit comporter moins de 200 valeurs")
+    }
     code_operation <- paste(code_operation, sep = "", collapse = ",")
   } else {
     stop("code_operation doit être non NULL.")
@@ -451,7 +460,7 @@ charge_observations_aspe <- function(code_operation) {
     # Vérifier le code de statut
     if (httr::status_code(response) %in% c(200, 206)) {
       # Obtenir le contenu de la réponse
-      content_text <- httr::content(response, as = "text", encoding = "UTF-8")
+      content_text <- httr::content(response, as = "text", encoding = "UTF-8", type="text")
       
       # Vérifier si le contenu est vide
       if (nchar(content_text) == 0) {
@@ -522,6 +531,67 @@ test_that("charge_observations_aspe works properly and show error if needed", {
 
 ```
 
+# split_observations_aspe
+
+
+```{r function}
+#' split_observations_aspe
+#'
+#' @param observations Résultat renvoyé par la fonction charge_observations_aspe
+#'
+#' @return
+#' Liste avec d'un côté les conditions de l'opération et de l'autre les listes faunistiques
+#' @export
+#'
+#' @examples
+split_observations_aspe <- function(observations) {
+ 
+  
+  liste_operations_aspe(codes_stations=c("04363001"))
+  detail_operation<-unique(observations[,                                 c("code_operation","codes_dispositifs_collecte","libelles_dispositifs_collecte","protocole_peche","objectifs_operation","code_prelevement_elementaire","type_prelevement_elementaire","duree_prelevement_elementaire","numero_passage","type_points","nombre_points","nombre_points_sans_poisson","nombre_points_facies_courant","nombre_points_facies_plat","nombre_points_facies_profond","nombre_points_annexes","nombre_points_berge","nombre_points_chenal","nom_ambiance","longueur_ambiance","largeur_ambiance","profondeur_ambiance","code_facies_ambiance","libelle_facies_ambiance","situation_ambiance","localisation_ambiance","classe_vitesse_courant_ambiance","code_ombrage_ambiance","libelle_ombrage_ambiance","code_granulo_ambiance_dominante","libelle_granulo_ambiance_dominante","code_granulo_ambiance_accessoire","libelle_granulo_ambiance_accessoire","vegetation_ambiance","abondance_cache_vegetation_aquatique_ambiance","abondance_cache_embacles_ambiance","abondance_cache_vegetation_bordure_ambiance","abondance_cache_sous_berge_ambiance","abondance_cache_granulo_ambiance")])
+                          
+  
+  
+    liste_taxons<-unique(observations[,                                 c("code_operation","code_lot","code_type_lot","libelle_type_lot","effectif_lot","code_taxon","code_alternatif_taxon","nom_commun_taxon","nom_latin_taxon","uri_taxon","taille_min_lot","taille_max_lot","type_longueur_lot","poids_lot_mesure","poids_lot_estime","methode_estimation_poids_lot","code_individu","taille_individu","type_longueur_individu","mesure_individu_reelle","poids_individu_mesure","poids_individu_estime","methode_estimation_poids_individu","sexe_individu","age_individu","codes_pathologies_lot","libelles_pathologies_lot","codes_fractions_pathologies_lot","libelles_fractions_pathologies_lot","uris_fractions_pathologies_lot","importances_pathologies_lot","codes_pathologies_individu","libelles_pathologies_individu","codes_fractions_pathologies_individu","libelles_fractions_pathologies_individu","uris_fractions_pathologies_individu","importances_pathologies_individu")])
+  
+  return(list(detail_operation=detail_operation,
+         liste_taxons=liste_taxons))
+}
+
+```
+
+
+```{r examples}
+
+obs<-charge_observations_aspe(code_operation=c("89771","89805"))
+detail<-split_observations_aspe(obs)
+
+
+```
+
+<!--
+Create a chunk with a test of use for your function
+
+- The chunk needs to be named `tests` at least
+- It contains working tests of your function
+- The chunk is better be named `tests-my_median` to be handled
+correctly when inflated as a vignette
+
+After inflating the template
+
+-  This test code will automatically be added in the "tests/testthat/" directory
+-->
+
+```{r tests}
+test_that("split_observations_aspe works properly and show error if needed", {
+  obs<-charge_observations_aspe(code_operation=c("89771","89805"))
+detail<-split_observations_aspe(obs)
+  expect_true(nrow(detail$detail_operation)>=2)
+expect_true(nrow(detail$liste_taxons)>=100)
+})
+
+
+```
 
 <!--
 # There can be development actions

@@ -3,3 +3,4 @@
 export(charge_observations_aspe)
 export(charge_stations_aspe)
 export(liste_operations_aspe)
+export(split_observations_aspe)

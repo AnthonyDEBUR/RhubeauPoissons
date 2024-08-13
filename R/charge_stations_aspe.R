@@ -29,7 +29,7 @@ params <- list(
   code_bassin = code_bassin0,                    # Code du bassin
   format = "json",                       # Format de la réponse
   size = 100,                             # Taille de la page (nombre de résultats par requête)
-fields = "code_station,libelle_station,coordonnee_x_station,coordonnee_y_station,code_point_prelevement_aspe,code_point_prelevement"
+fields = "code_station,libelle_station,coordonnee_x_station,coordonnee_y_station,code_point_prelevement_aspe,code_point_prelevement,longitude,latitude"
   )
 
 # Initialiser les variables pour la pagination

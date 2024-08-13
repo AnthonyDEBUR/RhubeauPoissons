@@ -40,6 +40,9 @@ liste_operations_aspe <- function(codes_stations = NULL,
     if (!is.character(codes_stations)) {
       stop("codes_stations doit être un vecteur de caractères.")
     }
+    if (length(codes_stations)>200) {
+      stop("codes_stations doit comporter moins de 200 valeurs")
+    }
     codes_stations0 <- paste(codes_stations, sep = "", collapse = ",")
   } else {
     codes_stations0 <- NULL
@@ -48,6 +51,9 @@ liste_operations_aspe <- function(codes_stations = NULL,
   if (!is.null(code_point_prelevement_aspe)) {
     if (!is.character(code_point_prelevement_aspe)) {
       stop("code_point_prelevement_aspe doit être un vecteur de caractères.")
+    }
+    if (length(code_point_prelevement_aspe)>200) {
+      stop("code_point_prelevement_aspe doit comporter moins de 200 valeurs")
     }
     code_point_prelevement_aspe0 <- paste(code_point_prelevement_aspe, sep = "", collapse = ",")
   } else {
