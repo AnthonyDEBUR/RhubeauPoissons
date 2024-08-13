@@ -55,6 +55,7 @@
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">liste_operations_aspe</span><span class="op">(</span></span>
 <span>  codes_stations <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  code_point_prelevement_aspe <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  date_debut <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  date_fin <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  dpt <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -68,6 +69,10 @@
 
 <dl><dt id="arg-codes-stations">codes_stations<a class="anchor" aria-label="anchor" href="#arg-codes-stations"></a></dt>
 <dd><p>Vecteur avec les codes stations dont on veut les opérations.</p></dd>
+
+
+<dt id="arg-code-point-prelevement-aspe">code_point_prelevement_aspe<a class="anchor" aria-label="anchor" href="#arg-code-point-prelevement-aspe"></a></dt>
+<dd><p>Vecteur avec les codes stations dont on veut les opérations</p></dd>
 
 
 <dt id="arg-date-debut">date_debut<a class="anchor" aria-label="anchor" href="#arg-date-debut"></a></dt>
@@ -103,12 +108,14 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Page 5 de 6 récupérée.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Page 6 de 6 récupérée.</span>
 <span class="r-in"><span><span class="va">liste_stations</span><span class="op">&lt;-</span><span class="va">liste_stations</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">liste_stations</span><span class="op">$</span><span class="va">code_station</span><span class="op">)</span>,<span class="op">]</span></span></span>
-<span class="r-in"><span><span class="va">liste_op</span><span class="op">&lt;-</span><span class="fu">liste_operations_aspe</span><span class="op">(</span>codes_stations<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">liste_stations</span><span class="op">$</span><span class="va">code_station</span>,<span class="fl">100</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span><span class="va">liste_op</span><span class="op">&lt;-</span><span class="fu">liste_operations_aspe</span><span class="op">(</span>codes_stations<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">liste_stations</span><span class="op">$</span><span class="va">code_station</span>,<span class="fl">10</span><span class="op">)</span>, </span></span>
 <span class="r-in"><span>                      date_debut<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2010-01-01"</span><span class="op">)</span>, </span></span>
 <span class="r-in"><span>                      date_fin<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2024-01-01"</span><span class="op">)</span><span class="op">)</span> </span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Page 1 de 3 récupérée.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Page 2 de 3 récupérée.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Page 3 de 3 récupérée.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Page 1 de 1 récupérée.</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">liste_op2</span><span class="op">&lt;-</span><span class="fu">liste_operations_aspe</span><span class="op">(</span>code_point_prelevement_aspe <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">liste_stations</span><span class="op">$</span><span class="va">code_point_prelevement_aspe</span>,<span class="fl">10</span><span class="op">)</span>,                       date_debut<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2010-01-01"</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>                      date_fin<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2024-01-01"</span><span class="op">)</span><span class="op">)</span> </span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Page 1 de 1 récupérée.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
