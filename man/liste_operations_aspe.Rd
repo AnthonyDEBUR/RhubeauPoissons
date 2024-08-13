@@ -6,6 +6,7 @@
 \usage{
 liste_operations_aspe(
   codes_stations = NULL,
+  code_point_prelevement_aspe = NULL,
   date_debut = NULL,
   date_fin = NULL,
   dpt = NULL,
@@ -14,6 +15,8 @@ liste_operations_aspe(
 }
 \arguments{
 \item{codes_stations}{Vecteur avec les codes stations dont on veut les opérations.}
+
+\item{code_point_prelevement_aspe}{Vecteur avec les codes stations dont on veut les opérations}
 
 \item{date_debut}{Date minimale de création de l'opération en base de données. (format date)}
 
@@ -34,8 +37,11 @@ liste_operations_aspe
 dpt<-c("44", "56")
 liste_stations<-charge_stations_aspe(dpt, code_agence = c("04"))
 liste_stations<-liste_stations[!is.na(liste_stations$code_station),]
-liste_op<-liste_operations_aspe(codes_stations=head(liste_stations$code_station,100), 
+liste_op<-liste_operations_aspe(codes_stations=head(liste_stations$code_station,10), 
                       date_debut=as.Date("2010-01-01"), 
+                      date_fin=as.Date("2024-01-01")) 
+
+liste_op2<-liste_operations_aspe(code_point_prelevement_aspe = head(liste_stations$code_point_prelevement_aspe,10),                       date_debut=as.Date("2010-01-01"), 
                       date_fin=as.Date("2024-01-01")) 
 
 

@@ -3,6 +3,7 @@
 #' liste_operations_aspe
 #'
 #' @param codes_stations Vecteur avec les codes stations dont on veut les opérations.
+#' @param code_point_prelevement_aspe Vecteur avec les codes stations dont on veut les opérations
 #' @param date_debut Date minimale de création de l'opération en base de données. (format date)
 #' @param date_fin Date maximale de création de l'opération en base de données (format date)
 #' @param dpt Vecteur avec les départements à charger
@@ -17,12 +18,16 @@
 #' dpt<-c("44", "56")
 #' liste_stations<-charge_stations_aspe(dpt, code_agence = c("04"))
 #' liste_stations<-liste_stations[!is.na(liste_stations$code_station),]
-#' liste_op<-liste_operations_aspe(codes_stations=head(liste_stations$code_station,100), 
+#' liste_op<-liste_operations_aspe(codes_stations=head(liste_stations$code_station,10), 
 #'                       date_debut=as.Date("2010-01-01"), 
+#'                       date_fin=as.Date("2024-01-01")) 
+#'
+#' liste_op2<-liste_operations_aspe(code_point_prelevement_aspe = head(liste_stations$code_point_prelevement_aspe,10),                       date_debut=as.Date("2010-01-01"), 
 #'                       date_fin=as.Date("2024-01-01")) 
 #'
 #'
 liste_operations_aspe <- function(codes_stations = NULL,
+                                  code_point_prelevement_aspe = NULL,
                                   date_debut = NULL,
                                   date_fin = NULL,
                                   dpt = NULL,
@@ -39,6 +44,16 @@ liste_operations_aspe <- function(codes_stations = NULL,
   } else {
     codes_stations0 <- NULL
   }
+  
+  if (!is.null(code_point_prelevement_aspe)) {
+    if (!is.character(code_point_prelevement_aspe)) {
+      stop("code_point_prelevement_aspe doit être un vecteur de caractères.")
+    }
+    code_point_prelevement_aspe0 <- paste(code_point_prelevement_aspe, sep = "", collapse = ",")
+  } else {
+    code_point_prelevement_aspe0 <- NULL
+  }
+  
   
   if (!is.null(date_debut)) {
     if (!lubridate::is.Date(lubridate::ymd(date_debut))) {
@@ -76,6 +91,7 @@ liste_operations_aspe <- function(codes_stations = NULL,
   # Paramètres de base de la requête
   params <- list(
     code_station = codes_stations0,
+    code_point_prelevement_aspe = code_point_prelevement_aspe0,
     # Codes stations
     date_creation_operation_min = if (!is.null(date_debut))
       date_debut
