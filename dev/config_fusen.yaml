@@ -20,3 +20,4 @@ flat_first.Rmd:
     document: true
     overwrite: ask
     clean: ask
+    codecov: false
