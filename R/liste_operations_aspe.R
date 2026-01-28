@@ -112,14 +112,15 @@ liste_operations_aspe <- function(codes_stations = NULL,
     code_bassin = code_agence,  # Code du bassin
     format = "json",
     # Format de la réponse
-    size = 100,
+    size = 100
+    #,
     # Taille de la page (nombre de résultats par requête)
-    fields = "code_point_prelevement_aspe,code_operation,date_operation,
-    etat_avancement_operation,
-libelle_qualification_operation,code_station,code_point_prelevement,
-protocole_peche,
-moyen_prospection,operateur_libelle,commanditaire_libelle,date_creation_operation,
-date_modification_operation"
+#     fields = "code_point_prelevement_aspe,code_operation,date_operation,
+#     etat_avancement_operation,
+# libelle_qualification_operation,code_station,code_point_prelevement,
+# protocole_peche,
+# moyen_prospection,operateur_libelle,commanditaire_libelle,date_creation_operation,
+# date_modification_operation"
   )
 
     params <- Filter(Negate(is.null), params)
